@@ -1,5 +1,7 @@
 import { redirect } from "next/navigation";
+import Link from "next/link";
 import { createClient } from "@/lib/supabase/server";
+import { CardPreview } from "@/components/CardPreview";
 import type { Profile } from "@/types/card";
 
 export default async function DashboardPage() {
@@ -33,12 +35,25 @@ export default async function DashboardPage() {
         </form>
       </div>
 
-      <p className="mt-6 text-gray-600">
-        ようこそ、{profile?.full_name || user.email} さん。
-      </p>
-      <p className="mt-2 text-sm text-gray-500">
-        あなたの名刺ID: <span className="font-mono">{profile?.username}</span>
-      </p>
+      {profile && (
+        <div className="mt-6">
+          <CardPreview profile={profile} />
+          <div className="mt-4 flex flex-wrap gap-3 text-sm">
+            <Link
+              href="/dashboard/edit"
+              className="rounded-lg bg-brand px-4 py-2 font-medium text-white hover:bg-brand-dark"
+            >
+              名刺を編集
+            </Link>
+            <Link
+              href={`/card/${profile.username}`}
+              className="rounded-lg border border-gray-300 px-4 py-2 font-medium text-gray-700 hover:bg-gray-50"
+            >
+              公開ページを見る
+            </Link>
+          </div>
+        </div>
+      )}
     </main>
   );
 }
