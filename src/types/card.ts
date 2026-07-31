@@ -28,11 +28,20 @@ export type Database = {
         Row: Profile;
         Insert: Partial<Profile> & { id: string; username: string };
         Update: Partial<Profile>;
+        Relationships: [];
       };
       connections: {
         Row: Connection;
         Insert: Partial<Connection> & { user_id: string; connected_user_id: string };
         Update: Partial<Connection>;
+        Relationships: [];
+      };
+    };
+    Views: {};
+    Functions: {
+      exchange_cards: {
+        Args: { other_user_id: string; via?: string };
+        Returns: void;
       };
     };
   };
